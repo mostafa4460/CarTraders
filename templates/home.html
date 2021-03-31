@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<form class="mx-auto mt-4" action="/search">
+    <div class="row">
+        <div class="col-sm search">
+            <input id="location" name="location" class="form-control" placeholder="Search by location">
+        </div>
+        <div class="col-sm search">
+            <input name="title" class="form-control" placeholder="Car you want">
+        </div>
+        <div class="col-sm search">
+            <div class="input-group">
+                <input name="trading_for" class="form-control" placeholder="Car you have">
+                <div class="input-group-append">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row row-cols-1 row-cols-md-3 mt-4">
+{% for trade in all_trades %}
+<div class="col mb-4">
+    <a class="trade" href="/trades/{{trade.id}}">
+        <div class="card text-primary">
+        <img src="{{trade.img_url}}" class="card-img-top">
+        <div class="card-body">
+            {% if trade.asking_cash %}
+            <p class="float-right text-danger"><b>- ${{trade.asking_cash}}</b></p>
+            {% elif trade.offering_cash %}
+            <p class="float-right text-success"><b>+ ${{trade.offering_cash}}</b></p>
+            {% endif %}
+            <h5 class="card-title">{{trade.title}}</h5>
+            <p class="card-text"><b>Trading for: </b>{{trade.trading_for}}</p>
+            <small class="text-muted">{{trade.user.city}}, {{trade.user.state}}</small>
+        </div>
+        </div>
+    </a>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/autocomplete.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFHiY3sRpBpkje4pInCYBZ2LY7x5wCOx8&libraries=places&callback=initAutocomplete" async defer></script>
+{% endblock %}

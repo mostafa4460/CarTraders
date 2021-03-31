@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<h1 id="edit-text" class="display-3 text-center mt-5">Edit Profile</h1>
+<form method="POST" id="edit_form">
+    {{ form.hidden_tag() }}
+
+    {% for field in form if field.widget.input_type != 'hidden' %}
+    <div>
+      {{ field(class="form-control") }}
+      {% for error in field.errors %}
+        <small class="text-danger">{{ error }}</small>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+    <button class="btn btn-primary">Edit</button>
+    <a href="/{{user.id}}" class="btn btn-danger">Cancel</a>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/autocomplete.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFHiY3sRpBpkje4pInCYBZ2LY7x5wCOx8&libraries=places&callback=initAutocomplete" async defer></script>
+{% endblock %}

@@ -1,0 +1,149 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+    display: none;
+}
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/*********************/
+/*      NAVBAR      */
+/********************/
+
+#navbar {
+   padding: 0 16px !important;
+   height: 60px !important; 
+}
+
+.nav-link {
+    font-size: 1.171875rem;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.nav-link:hover {
+    color: whitesmoke !important;
+    background-color: #ccc;
+}
+.nav-link:focus {
+    color: whitesmoke !important;
+}
+
+#logout {
+    border: none;
+    border-radius: 0;
+}
+#logout:focus {
+    color: whitesmoke !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/*********************/
+/*   Flash messages  */
+/*********************/
+
+.flash-msg {
+    margin: 20px auto;
+    font-weight: bold;
+    text-align: center;
+}
+
+/*********************/
+/*     Home ANON     */
+/*********************/
+
+.home-hero {
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-image: url('/static/images/home_background.jpg');
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+    color: white;
+    text-shadow: 0 0 8px #2c3e50;
+}
+
+/*********************/
+/*       Home        */
+/*********************/
+
+.search {
+    padding: 0 !important;
+}
+
+.trade:hover {
+    text-decoration: none;
+}
+.trade .card:hover {
+    border: 2px solid #2c3e50;
+}
+
+/*********************/
+/*    Signup, Login  */
+/*********************/
+
+#signup-text, #login-text, #edit-text {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+#signup_form, #login_form, #edit_form {
+    width: 50%;
+    text-align: center;
+    margin: auto;
+}
+
+#signup_form div, #login_form div, #edit_form div {
+    margin: 15px 0;
+}
+
+/*********************/
+/*   User Profile   */
+/********************/
+
+#cover-pic {
+    width: 100vw;
+    height: 360px;
+    margin: 0 -50vw;
+    position: relative;
+    left: 50%;
+    z-index: -1;
+    border-bottom: 2px solid #2c3e50;
+}
+
+#profile-pic {
+    width: 200px;
+    height: 200px;
+    border: 5px solid white;
+    position: relative;
+    top: 130px; 
+    left: 425px; 
+}
+
+#user-btns {
+    position: absolute;
+    margin-top: 20px;
+    left: 55%;
+}
+
+#user-info {
+    text-align: center;
+    margin-top: 50px;
+    margin-right: 50px;
+}
+#user-info h4 {
+    font-weight: bold;
+}
+#user-info h4, #user-info p {
+    margin: 0;
+}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<img id="cover-pic" src="{{user.cover_pic}}">
+<img class="rounded-circle" id="profile-pic" src="{{user.profile_pic}}">
+
+{% if user.id == current_user.id %}
+<form action="/{{user.id}}/delete" method="POST" id="user-btns">
+    <a href="/{{user.id}}/edit" class="btn btn-primary"><i class="fas fa-pencil-alt mr-1"></i>Edit Profile</a>
+    <button class="btn btn-danger"><i class="fas fa-trash mr-1"></i>Delete Profile</button>
+</form>
+{% endif %}
+
+<div id="user-info"> 
+    <h4 class="text-primary">{{user.first_name}} {{user.last_name}}</h4>
+    <p class="text-secondary">{{user.email}}</p>
+    <p class="text-secondary">({{user.phone[:3]}})-{{user.phone[4:7]}}-{{user.phone[7:]}}</p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 mt-4">
+    {% for trade in trades %}
+    <div class="col mb-4">
+        <a class="trade" href="/trades/{{trade.id}}">
+            <div class="card text-primary">
+            <img src="{{trade.img_url}}" class="card-img-top">
+            <div class="card-body">
+                {% if trade.asking_cash %}
+                <p class="float-right text-danger"><b>- ${{trade.asking_cash}}</b></p>
+                {% elif trade.offering_cash %}
+                <p class="float-right text-success"><b>+ ${{trade.offering_cash}}</b></p>
+                {% endif %}
+                <h5 class="card-title">{{trade.title}}</h5>
+                <p class="card-text"><b>Trading for: </b>{{trade.trading_for}}</p>
+                <small class="text-muted">{{trade.user.city}}, {{trade.user.state}}</small>
+            </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
