@@ -29,6 +29,11 @@
     <a class="trade" href="/trades/{{trade.id}}">
         <div class="card text-primary">
         <img src="{{trade.img_url}}" class="card-img-top">
+        {% if not trade.available %}
+            <div class="card-img-overlay">
+                <h1 class="display-1 text-danger sold-small">SOLD</h1>
+            </div>
+        {% endif %}
         <div class="card-body">
             {% if trade.asking_cash %}
             <p class="float-right text-danger"><b>- ${{trade.asking_cash}}</b></p>

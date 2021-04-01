@@ -14,6 +14,8 @@ class UserEditForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     phone = StringField('Phone', validators=[DataRequired(), Length(min=10, max=10)])
     location = StringField('Location (City, State)', validators=[DataRequired(), validate_location])
+    cover_pic = StringField('Cover Picture URL')
+    profile_pic = StringField('Profile Picture URL')
 
 class UserAddForm(UserEditForm):
     """Form for adding users."""
@@ -32,12 +34,12 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(max=20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
 
-class AddTradeForm(FlaskForm):
+class TradeForm(FlaskForm):
     """Add New Trade form."""
 
-    trading = StringField('Trading', validators=[DataRequired()])
+    title = StringField('Trading', validators=[DataRequired()])
     trading_for = StringField('Trading For', validators=[DataRequired()])
-    additional_cash = IntegerField('Asking $', validators=[Optional()])
-    offering_cash = IntegerField('Offering $', validators=[Optional()])
-    img = StringField('Image')
+    asking_cash = IntegerField('Asking $$$', validators=[Optional()])
+    offering_cash = IntegerField('Offering $$$', validators=[Optional()])
+    img_url = StringField('Image URL')
     description = TextAreaField('Description')

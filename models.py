@@ -42,7 +42,7 @@ class Trade(db.Model):
 
     img_url = db.Column(
         db.Text,
-        default='static/images/default-car.png'
+        default='/static/images/default-car.png'
     )
 
     timestamp = db.Column(

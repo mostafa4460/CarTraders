@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block main %}
-
-{% for trade in trades %}
-<p><img src="data:image/jpeg;base64,{{ base64.b64decode(trade.main_img) }}"/></p>
-{% endfor %}
-
-{% endblock %}

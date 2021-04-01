@@ -2,7 +2,7 @@
 
 {% block main %}
 
-<h1 id="trade-text" class="display-3 text-center mt-5">Create a new trade</h1>
+<h1 id="trade-text" class="display-3 text-center mt-5">Edit a trade</h1>
 <form id="trade_form" method="POST">
     {{ form.hidden_tag() }}
 
@@ -15,8 +15,13 @@
     </div>
     {% endfor %}
 
-    <button class="btn btn-success">Submit</button>
-    <a href="/" class="btn btn-danger">Cancel</a>
+    <select class="form-control mb-2" id="available" name="available">
+        <option value=True>Available</option>
+        <option value=False>Sold</option>
+    </select>
+
+    <button class="btn btn-success">Save</button>
+    <a href="/trades/{{trade.id}}" class="btn btn-danger">Cancel</a>
 </form>
 
 {% endblock %}

@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from models import db, connect_db, User, Trade
-from forms import UserAddForm, UserEditForm, LoginForm, AddTradeForm
+from forms import UserAddForm, UserEditForm, LoginForm, TradeForm
 from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
@@ -52,7 +52,7 @@ def homepage():
 
 
 ############################################################
-#                         INDEX
+#                         SEARCH
 ############################################################
 
 def get_filtered_query(q_obj):
@@ -216,6 +216,8 @@ def edit_user(id):
         user.phone = form.phone.data
         user.city = location[0].strip()
         user.state = location[1].strip()
+        user.cover_pic = form.cover_pic.data
+        user.profile_pic = form.profile_pic.data
         db.session.commit()
 
         flash("Profile successfully updated", "success")
@@ -253,27 +255,96 @@ def delete_user(id):
 ############################################################
 
 @app.route('/trades/new', methods=["GET", "POST"])
+@login_required
 def add_trade():
     """Add a new trade
     - Show form if get
     - If valid, add trade to DB and redirect to user profile page
     """
 
-    form = AddTradeForm()
+    form = TradeForm()
 
     if form.validate_on_submit():
         trade = Trade(
-            title=form.trading.data,
+            title=form.title.data,
             trading_for=form.trading_for.data,
-            asking_cash=form.additional_cash.data,
-            offering_cash=form.offering_cash.data,
-            img_url=form.img.data,
-            description=form.description.data,
+            asking_cash=form.asking_cash.data or None,
+            offering_cash=form.offering_cash.data or None,
+            img_url=form.img_url.data or None,
+            description=form.description.data or None,
             user_id=current_user.id
         )
         db.session.add(trade)
         db.session.commit()
         flash("Successfully added new trade", "success")
-        return redirect('/')
+        return redirect(f'/{current_user.id}')
 
     return render_template("trades/add-form.html", form=form)
+
+@app.route('/trades/<int:id>')
+@login_required
+def get_trade(id):
+    """Show the details page for a single trade
+    - If not logged in, flash msg and redirect to login page
+    - If logged in AND current_user is the owner of the trade, show edit / delete trade buttons
+    """
+
+    trade = Trade.query.get_or_404(id)
+
+    return render_template("trades/trade.html", trade=trade)
+
+@app.route('/trades/<int:id>/edit', methods=["GET", "POST"])
+@login_required
+def edit_trade(id):
+    """Handle trade update.
+    - If not logged in, flash msg and redirect to login page
+    - If logged in, but the profile is not the current user's, flash different msg and redirect to home
+    - If the profile is the current user's, show edit form if get OR update trade in DB if post
+    """
+
+    trade = Trade.query.get_or_404(id)
+
+    if trade.user.id != current_user.id:
+        flash("You are unauthorized to view this page.", "danger")
+        return redirect("/")
+
+    form = TradeForm(obj=trade)
+
+    if form.validate_on_submit():
+        available = True if request.form["available"] == "True" else False
+
+        trade.title = form.title.data
+        trade.trading_for = form.trading_for.data
+        trade.asking_cash = form.asking_cash.data
+        trade.offering_cash = form.offering_cash.data
+        trade.img_url = form.img_url.data
+        trade.description = form.description.data
+        trade.available = available
+
+        db.session.add(trade)
+        db.session.commit()
+        flash("Successfully updated trade", "success")
+        return redirect(f'/trades/{trade.id}')
+
+    return render_template("trades/edit-form.html", form=form, trade=trade)
+
+@app.route('/trades/<int:id>/delete', methods=["POST"])
+@login_required
+def delete_trade(id):
+    """Handle trade deletion.
+    - If not logged in, flash msg and redirect to login page
+    - If logged in, but the trade is not the current users', flash different msg and redirect to home
+    - If the trade is the current users', delete the trade from the DB and redirect to user's profile page
+    """
+
+    trade = Trade.query.get_or_404(id)
+
+    if trade.user.id != current_user.id:
+        flash("You are unauthorized to perform this action.", "danger")
+        return redirect("/")
+
+    db.session.delete(trade)
+    db.session.commit()
+
+    flash("Trade successfully deleted", "info")
+    return redirect(f'/{trade.user.id}')
