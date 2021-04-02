@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from models import db, connect_db, User, Trade
 from forms import UserAddForm, UserEditForm, LoginForm, TradeForm
@@ -10,9 +9,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///car-traders')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret")
-# toolbar = DebugToolbarExtension(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
