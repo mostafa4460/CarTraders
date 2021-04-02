@@ -8,6 +8,11 @@ from datetime import datetime
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
+def connect_db(app):
+    """Connect this database to provided Flask app."""
+
+    db.app = app
+    db.init_app(app)
 
 class Trade(db.Model):
     """An individual trade."""
@@ -161,9 +166,3 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         """Returns a better string representation of a user"""
         return f'<User {self.id} {self.username}>'
-
-def connect_db(app):
-    """Connect this database to provided Flask app."""
-
-    db.app = app
-    db.init_app(app)

@@ -10,9 +10,9 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///car-traders')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret")
-toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -216,8 +216,8 @@ def edit_user(id):
         user.phone = form.phone.data
         user.city = location[0].strip()
         user.state = location[1].strip()
-        user.cover_pic = form.cover_pic.data
-        user.profile_pic = form.profile_pic.data
+        user.cover_pic = form.cover_pic.data or None
+        user.profile_pic = form.profile_pic.data or None
         db.session.commit()
 
         flash("Profile successfully updated", "success")

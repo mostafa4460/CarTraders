@@ -8,12 +8,14 @@
     {{ form.hidden_tag() }}
 
     {% for field in form if field.widget.input_type != 'hidden' %}
+    {% if field.name != 'cover_pic' and field.name != 'profile_pic' %}
     <div>
       {{ field(placeholder=field.label.text, class="form-control") }}
       {% for error in field.errors %}
         <small class="text-danger">{{ error }}</small>
       {% endfor %}
     </div>
+    {% endif %}
     {% endfor %}
 
     <button class="btn btn-primary">Sign up</button>
