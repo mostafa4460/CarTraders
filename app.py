@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///car-traders')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('HEROKU_DATABASE_URL','postgresql:///car-traders')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret")
 
@@ -345,6 +345,3 @@ def delete_trade(id):
 
     flash("Trade successfully deleted", "info")
     return redirect(f'/{trade.user.id}')
-
-if __name__ == '__main__':
-    db.app.run()
