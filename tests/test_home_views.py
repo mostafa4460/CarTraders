@@ -1,9 +1,5 @@
 """Home page views tests"""
 
-# add python path for imports to work
-import sys
-sys.path.insert(1, '../')
-
 import os
 from unittest import TestCase
 from models import db, connect_db, User

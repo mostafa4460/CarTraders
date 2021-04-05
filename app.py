@@ -19,6 +19,8 @@ login_manager.login_message_category = "danger"
 
 connect_db(app)
 
+API_KEY = os.environ.get('API_KEY')
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -43,7 +45,7 @@ def homepage():
                         .order_by(Trade.timestamp.desc())
                         .limit(100)
                         .all())
-        return render_template("home.html", all_trades=all_trades)
+        return render_template("home.html", all_trades=all_trades, API_KEY=API_KEY)
 
     return render_template("home-anon.html")
 
@@ -135,7 +137,7 @@ def signup():
         except IntegrityError as e:
             flash(e.orig.diag.message_detail, "danger")
 
-    return render_template('users/signup.html', form=form)
+    return render_template('users/signup.html', form=form, API_KEY=API_KEY)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
