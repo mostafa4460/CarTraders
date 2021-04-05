@@ -35,4 +35,6 @@ There are certain requirements for the user location input to be accepted and th
 **Python  
 Flask  
 Postgresql     
-JavaScript** (for the API)
+JavaScript** (for the API)  
+**HTML  
+CSS**
