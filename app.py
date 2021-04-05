@@ -18,7 +18,6 @@ login_manager.login_message = "Please log in to access this page"
 login_manager.login_message_category = "danger"
 
 connect_db(app)
-db.create_all()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -346,3 +345,6 @@ def delete_trade(id):
 
     flash("Trade successfully deleted", "info")
     return redirect(f'/{trade.user.id}')
+
+if __name__ == '__main__':
+    db.app.run()
