@@ -1,33 +1,38 @@
-API: https://developers.google.com/maps/documentation/javascript/places-autocomplete
-Schemas: https://drawsql.app/springboard-1/diagrams/cartraders
+***
+#Car-Traderz ([website](https://car-traderz.herokuapp.com/))
+***
 
-API will be implemented only on the client side, since there is no use for it on the server side ...
-API is a location autocomplete widget, so users can easily select their locations.
+**This website connects users who enjoy trading and owning different cars, without the hassle of dealing with selling and buying. Instead of using platforms typically known for selling/buying items, car enthusiasts now have a dedicated platform where the main objective of every user is to trade vehicles.**
 
-****************
-   Main Views
-****************
+###As a user, you can:
 
-1) /?location=&trading=&looking_for=
-render either:
-    a. Screen sized background image and a sign up button
-    b. Home page with search bar for querying trades and all trades in user's state (if logged in) 
-    can also render trades by location of city, state and/or car being traded string and/or car users are looking for string
+1. Create a free account or log in with an existing account.
+2. Edit/Delete your own profile (including contact info and location).
+3. Make a new trade consisting of:
+	* Car you are trading (title)
+	* Car you are looking for
+	* An image URL of your car
+	* Additional $$$, if asking
+	* Offering $$$, if offering
+	* A trade description
+4. Edit/Delete own trades only.
+5. Search for trades by location, car being traded, and car wanted (by default, if the user does not use the search bar, the most recent 100 trades located in the user's state will be retrieved and displayed).
 
-2) /signup, /login
-render signup / login forms
+###The standard user flow will typically look like this:
 
-3) /<username>
-render user profile with all user trades
+1. Sign up for a free account.
+2. Create a trade for the car you currently own to have other users reach out to you with different offers.
+3. Use the search bar to look for trades requesting the car you own (leaving the location search bar empty, which will default to trades within your own state).
+4. If there are a lot of trades asking for your specific vehicle, you may then want to narrow the search even further by including the city you are located in and/or the car that you are asking for as well.
+5. This will narrow the choices to the closest user near you, who is trading the car you are looking for and asking for the car you currently own.
 
-5) /trades/<id>
-render a single trade
+###Important Note
 
-6) /trades/new, POST
-only logged in user: render create listing form
+There are certain requirements for the user location input to be accepted and then stored into the database. Therefore, Google's Places Autocomplete API was used to auto-suggest locations based on the users' input by CITY, STATE only. The API was specifically restricted to auto-suggest only cities, states in the U.S to prevent users from inputting their full addresses. Read more about the API
+[here](https://developers.google.com/maps/documentation/javascript/places-autocomplete).
 
-7) /trades/<id>/edit, POST
-only logged in user and owner of the listing: render edit listing form
-
-8) /trades/<id>/delete, POST
-only logged in user and owner of the listing: delete listing
+##Stack Used:
+**Python  
+Flask  
+Postgresql     
+JavaScript** (for the API)
