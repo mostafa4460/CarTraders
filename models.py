@@ -19,47 +19,16 @@ class Trade(db.Model):
 
     __tablename__ = "trades"
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-
-    title = db.Column(
-        db.String(70),
-        nullable=False
-    )
-
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(70), nullable=False)
     description = db.Column(db.Text)
-
-    trading_for = db.Column(
-        db.String(50),
-        default="Open to trades"
-    )
-
+    trading_for = db.Column(db.String(50), default="Open to trades")
     asking_cash = db.Column(db.Integer)
-
     offering_cash = db.Column(db.Integer)
-
-    available = db.Column(
-        db.Boolean,
-        default=True
-    )
-
-    img_url = db.Column(
-        db.Text,
-        default='/static/images/default-car.png'
-    )
-
-    timestamp = db.Column(
-        db.DateTime,
-        default=datetime.utcnow(),
-    )
-
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id", ondelete="CASCADE"),
-        nullable=False
-    )
+    available = db.Column(db.Boolean, default=True)
+    img_url = db.Column(db.Text, default='/static/images/default-car.png')
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
 
     user = db.relationship("User", backref="trades")
 
@@ -68,63 +37,17 @@ class User(UserMixin, db.Model):
 
     __tablename__ = "users"
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
-
-    username = db.Column(
-        db.String(20),
-        nullable=False,
-        unique=True
-    )
-
-    password = db.Column(
-        db.Text,
-        nullable=False
-    )
-
-    first_name = db.Column(
-        db.String(20),
-        nullable=False
-    )
-
-    last_name = db.Column(
-        db.String(20),
-        nullable=False
-    )
-
-    email = db.Column(
-        db.Text,
-        nullable=False,
-        unique=True
-    )
-
-    phone = db.Column(
-        db.String(10),
-        nullable=False,
-        unique=True
-    )
-
-    city = db.Column(
-        db.Text,
-        nullable=False
-    )
-
-    state = db.Column(
-        db.Text,
-        nullable=False
-    )
-
-    cover_pic = db.Column(
-        db.Text,
-        default = 'static/images/default_cover.jpg'
-    )
-
-    profile_pic = db.Column(
-        db.Text,
-        default = 'static/images/default_profile.jpg'
-    )
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.Text, nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.Text, nullable=False, unique=True)
+    phone = db.Column(db.String(10), nullable=False, unique=True)
+    city = db.Column(db.Text, nullable=False)
+    state = db.Column(db.Text, nullable=False)
+    cover_pic = db.Column(db.Text, default = 'static/images/default_cover.jpg')
+    profile_pic = db.Column(db.Text, default = 'static/images/default_profile.jpg')
 
     @classmethod
     def signup(cls, username, password, first_name, last_name, email, phone, city, state):

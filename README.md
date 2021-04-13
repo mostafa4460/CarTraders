@@ -4,6 +4,8 @@
 
 **This website connects users who enjoy trading and owning different cars, without the hassle of dealing with selling and buying. Instead of using platforms typically known for selling/buying items, car enthusiasts now have a dedicated platform where the main objective of every user is to trade vehicles.**
 
+<small>Use **username**: <ins>*moose*</ins> & **password**: <ins>*password*</ins> if you don't want to sign up with a free account.</small>
+
 ### As a user, you can:
 
 1. Create a free account or log in with an existing account.
@@ -30,6 +32,20 @@
 
 There are certain requirements for the user location input to be accepted and then stored into the database. Therefore, Google's Places Autocomplete API was used to auto-suggest locations based on the users' input by CITY, STATE only. The API was specifically restricted to auto-suggest only cities, states in the U.S to prevent users from inputting their full addresses. Read more about the API
 [here](https://developers.google.com/maps/documentation/javascript/places-autocomplete).
+
+### Installation:
+
+1. Clone this github repo => `git clone https://github.com/mostafa4460/CarTraders.git`
+2. Make a python virtual-env => `python -m venv venv`
+3. Install dependencies => `pip install -r requirements.txt`
+4. Create a local database on your system (car-traders) => `createdb car-traders`
+5. Add SECRET_KEY as a system environment on your system and set it to anything you want
+6. Seed your local database with dummy data => `python seed.py`
+7. To use the Google Places Autocomplete API, which suggests locations when users start typing, you need to sign up for a Google API key. Then, add API_KEY to your system environment and set it to your new API key.
+
+### Data Models:
+
+![Data Models](./static/images/models.png)
 
 ## Stack Used:
 **Python  
